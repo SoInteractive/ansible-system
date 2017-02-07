@@ -1,0 +1,6 @@
+---
+basic_packages:
+  - tree
+  - vim
+  - lsof
+  - mlocate

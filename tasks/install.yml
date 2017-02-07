@@ -1,0 +1,6 @@
+---
+- name: Install basic software
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ basic_packages }}"
