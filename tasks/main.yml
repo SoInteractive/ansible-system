@@ -16,4 +16,15 @@
 - include: yum.yml
   when: ansible_pkg_mgr == "yum"
 
+- name: add http proxy to /etc/environment
+  lineinfile:
+    dest: /etc/environment
+    line: "{{ item.var }}={{ item.value }}"
+    regexp: ".*{{ item.var }}.*$"
+    state: present
+  with_items:
+    - { var: "HTTP_PROXY", value: {{ http_proxy }} }
+    - { var: "HTTPS_PROXY", value: {{ https_proxy | default(http_proxy) }} }
+  when: http_proxy is defined
+
 - include: install.yml
