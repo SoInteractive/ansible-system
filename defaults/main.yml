@@ -1,2 +1,6 @@
 ---
 recofigure_repositories: False
+
+set_global_proxy: False
+
+disable_ipv6: True

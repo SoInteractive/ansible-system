@@ -3,3 +3,4 @@ basic_packages:
   - tree
   - vim
   - lsof
+  - haveged

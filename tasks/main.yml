@@ -23,8 +23,16 @@
     regexp: ".*{{ item.var }}.*$"
     state: present
   with_items:
-    - { var: "HTTP_PROXY", value: {{ http_proxy }} }
-    - { var: "HTTPS_PROXY", value: {{ https_proxy | default(http_proxy) }} }
-  when: http_proxy is defined
+    - { var: "HTTP_PROXY", value: "{{ http_proxy }}" }
+    - { var: "HTTPS_PROXY", value: "{{ https_proxy | default(http_proxy) }}" }
+  when: http_proxy is defined and set_global_proxy
 
 - include: install.yml
+
+- name: disable IPv6
+  sysctl:
+    name: net.ipv6.conf.all.disable_ipv6
+    value: 1
+    sysctl_set: yes
+    state: present
+  when: disable_ipv6

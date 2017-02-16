@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Pawel Krupa
+  description: Role template
+  company: Sointeractive
+  min_ansible_version: 1.2
+  platforms:
+   - name: EL
+     versions:
+       - all
+   - name: Ubuntu
+     versions:
+       - 14.04
+       - 16.04
+  galaxy_tags:
+   - basics
+   - vim
+   - base software
+   - entropy
+
+#dependencies:
+#  - { role: username.common }
+

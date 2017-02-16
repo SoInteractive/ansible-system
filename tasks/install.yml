@@ -4,3 +4,5 @@
     name: "{{ item }}"
     state: installed
   with_items: "{{ basic_packages }}"
+  notify:
+    - restart haveged
