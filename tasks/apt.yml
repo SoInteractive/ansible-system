@@ -11,8 +11,11 @@
     dest: /etc/apt/sources.list
   when: recofigure_repositories
 
-- name: Reload apt cache
-#  command: "apt-cache update"
+- name: Update apt cache
   apt:
     update_cache: yes
 
+# Cannot upgrade via "apt" module since it depends on aptitude
+- name: Upgrade system
+  command: apt-get -y upgrade
+  when: upgrade_system

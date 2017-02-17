@@ -8,3 +8,10 @@
     line: "proxy={{ http_proxy }}"
   ignore_errors: yes
   when: http_proxy is defined
+
+- name: Upgrade system
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  when: upgrade_system
