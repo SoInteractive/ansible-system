@@ -42,3 +42,21 @@
     src: motd.j2
     dest: /etc/motd
   when: motd_message is defined
+
+#- name: Reboot
+#  command: shutdown -r now "Ansible updates triggered"
+#  async: 0
+#  poll: 0
+#  ignore_errors: true
+#  when: upgrade_system
+#
+#- name: Wait for server to come back
+#  become: no
+#  local_action:
+#    module: wait_for
+#    host: "{{ ansible_host }}"
+#    state: started
+#    delay: 30
+#    timeout: 300
+#  when: upgrade_system
+
