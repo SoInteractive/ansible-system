@@ -36,3 +36,9 @@
     sysctl_set: yes
     state: present
   when: disable_ipv6
+
+- name: Set Message of the Day
+  template:
+    src: motd.j2
+    dest: /etc/motd
+  when: motd_message is defined

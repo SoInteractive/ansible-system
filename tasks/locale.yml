@@ -1,0 +1,14 @@
+---
+- name: Configure locale
+  lineinfile:
+    dest: /etc/locale.gen
+    regexp: '^#? ?en_US.UTF-8 UTF-8'
+    line: 'en_US.UTF-8 UTF-8'
+    state: present
+  register: added_locale
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Rebuild locale
+  command: /usr/sbin/locale-gen
+  when: ansible_distribution == 'Ubuntu' and added_locale | changed
+
