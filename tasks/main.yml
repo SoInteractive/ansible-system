@@ -16,6 +16,9 @@
 - include: yum.yml
   when: ansible_pkg_mgr == "yum"
 
+- set_fact:
+    all_ip: "localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% if not loop.last %},{% endif %}{% endfor %}"
+
 - name: add http proxy to /etc/environment
   lineinfile:
     dest: /etc/environment
@@ -23,9 +26,19 @@
     regexp: ".*{{ item.var }}.*$"
     state: present
   with_items:
-    - { var: "HTTP_PROXY", value: "{{ http_proxy }}" }
-    - { var: "HTTPS_PROXY", value: "{{ https_proxy | default(http_proxy) }}" }
-  when: http_proxy is defined and set_global_proxy
+    - { var: "http_proxy", value: "{{ http_proxy }}" }
+    - { var: "https_proxy", value: "{{ https_proxy | default(http_proxy) }}" }
+    - { var: "no_proxy", value: "{{ all_ip }}" }
+#    - { var: "no_proxy", value: "localhost" }
+  when: http_proxy is defined
+
+- name: set DefaultEnvironment in systemd
+  lineinfile:
+    dest: /etc/systemd/system.conf
+    line: "DefaultEnvironment=\"http_proxy={{ http_proxy }}\" \"https_proxy={{ https_proxy }}\" \"no_proxy={{ all_ip }}\""
+    regexp: ".*DefaultEnvironment.*$"
+    state: present
+  when: ansible_service_mgr == "systemd"
 
 - include: install.yml
 
