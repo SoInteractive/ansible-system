@@ -17,7 +17,7 @@
   when: ansible_pkg_mgr == "yum"
 
 - set_fact:
-    all_ip: "localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% if not loop.last %},{% endif %}{% endfor %}{% if vip_address is defined %},{{ vip_address }}{% endif %}"
+    all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'] }}{% if domainname is defined %},{{ hostvars[host]['inventory_hostname'] }}.{{ domainname }}{% endif %}{% if not loop.last %},{% endif %}{% endfor %}{% if vip_address is defined %},{{ vip_address }},{{ vip_domain }}{% endif %}"
 
 - name: add http proxy to /etc/environment
   lineinfile:
