@@ -18,4 +18,4 @@
 # Cannot upgrade via "apt" module since it depends on aptitude
 - name: Upgrade system
   command: apt-get -y upgrade
-  when: upgrade_system
+  when: system_upgrade

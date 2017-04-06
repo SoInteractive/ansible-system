@@ -3,8 +3,15 @@ recofigure_repositories: False
 
 set_global_proxy: False
 
-disable_ipv6: True
+system_disable_ipv6: True
 
-upgrade_system: False
+system_upgrade: False
 
 #motd_message
+system_max_conn: 1024
+system_syn_backlog: 4096
+system_tw_reuse: 1   # reuse TIME_WAIT connections
+system_tw_recycle: 0 # recycling of TIME_WAIT sockets (use with caution)
+
+system_sysctl: []
+#  - { var: "net.ipv4.tcp_tw_recycle", value: "{{ system_tw_recycle }}" }

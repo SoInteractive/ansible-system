@@ -14,4 +14,4 @@
     name: '*'
     state: latest
     update_cache: yes
-  when: upgrade_system
+  when: system_upgrade
