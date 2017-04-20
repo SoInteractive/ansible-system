@@ -50,6 +50,20 @@
     dest: /etc/motd
   when: motd_message is defined
 
+#- name: Set issue.net (banner before SSH login)
+#  file:
+#    src: issue.net
+#    dest: /etc/issue.net
+#
+#- name: Configure SSHD
+#  template:
+#    src: sshd_config.j2
+#    dest: /etc/ssh/sshd_config
+#    owner: root
+#    group: root
+#    mode: 0644
+#    backup: yes
+
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"
 #  async: 0

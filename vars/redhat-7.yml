@@ -4,3 +4,4 @@ basic_packages:
   - vim
   - lsof
   - haveged
+  - curl
