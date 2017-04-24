@@ -1,5 +1,5 @@
 ---
-basic_packages:
+system_packages:
   - tree
   - vim
   - lsof

@@ -1,0 +1,35 @@
+---
+- block:
+  - name: Reconfigure apt repositories
+    template:
+      src: sources.list.j2
+      dest: /etc/apt/sources.list
+    when: system_recofigure_repositories
+  
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+
+  # Cannot upgrade via "apt" module since it depends on aptitude
+  - name: Upgrade system
+    command: apt-get -y upgrade
+    when: system_upgrade
+  when: ansible_pkg_mgr == "apt"
+
+- name: Upgrade system
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  when: system_upgrade and ansible_pkg_mgr == "yum"
+
+- name: Install basic software
+  package:
+    name: "{{ item }}"
+    state: installed
+  with_items: "{{ system_packages }}"
+
+- name: Ensure haveged is started
+  service:
+    name: haveged
+    state: started
