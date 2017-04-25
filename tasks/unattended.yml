@@ -1,0 +1,42 @@
+---
+- block:
+  - name: Install unattended-upgrades package
+    apt:
+      name: unattended-upgrades
+      state: present
+
+  - name: Copy 20auto-upgrades conf file
+    copy:
+      src: 20auto-upgrades
+      dest: /etc/apt/apt.conf.d/20auto-upgrades
+      owner: root
+      group: root
+      mode: 644
+
+  - name: Copy 50unattended-upgrades conf file
+    template:
+      src: 50unattended-upgrades
+      dest: /etc/apt/apt.conf.d/50unattended-upgrades
+      owner: root
+      group: root
+      mode: 644
+  when: ansible_pkg_mgr == "apt"
+  
+- block:
+  - name: Install yum-cron package
+    yum:
+      name: yum-cron
+      state: present
+  
+  - name: Configure yum-cron.conf
+    template: 
+      src: yum-cron.conf.j2
+      dest: /etc/yum/yum-cron.conf
+    notify: restart yum-cron
+  
+  - name: Ensure yum-cron service is running
+    service: 
+      name: yum-cron
+      state: started
+      enabled: yes
+  when: ansible_pkg_mgr == "yum"

@@ -10,37 +10,13 @@
   tags:
     - always
 
-- include: apt.yml
-  when: ansible_pkg_mgr == "apt"
+- include: proxy.yml
+  when: system_http_proxy != ""
 
-- include: yum.yml
-  when: ansible_pkg_mgr == "yum"
+- include: packages.yml
 
-- set_fact:
-    all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'] }}{% if domainname is defined %},{{ hostvars[host]['inventory_hostname'] }}.{{ domainname }}{% endif %}{% if not loop.last %},{% endif %}{% endfor %}{% if vip_address is defined %},{{ vip_address }},{{ vip_domain }}{% endif %}"
-
-- name: add http proxy to /etc/environment
-  lineinfile:
-    dest: /etc/environment
-    line: "{{ item.var }}={{ item.value }}"
-    regexp: ".*{{ item.var }}.*$"
-    state: present
-  with_items:
-    - { var: "http_proxy", value: "{{ http_proxy }}" }
-    - { var: "https_proxy", value: "{{ https_proxy | default(http_proxy) }}" }
-    - { var: "no_proxy", value: "{{ all_ip }}" }
-#    - { var: "no_proxy", value: "localhost" }
-  when: http_proxy is defined
-
-- name: set DefaultEnvironment in systemd
-  lineinfile:
-    dest: /etc/systemd/system.conf
-    line: "DefaultEnvironment=\"http_proxy={{ http_proxy }}\" \"https_proxy={{ https_proxy }}\" \"no_proxy={{ all_ip }}\""
-    regexp: ".*DefaultEnvironment.*$"
-    state: present
-  when: ansible_service_mgr == "systemd"
-
-- include: install.yml
+- include: unattended.yml
+  when: system_autoupgrades
 
 - include: sysctl.yml
 
@@ -48,7 +24,7 @@
   template:
     src: motd.j2
     dest: /etc/motd
-  when: motd_message is defined
+  when: system_motd != ""
 
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"

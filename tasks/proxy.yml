@@ -1,0 +1,40 @@
+---
+- set_fact:
+    all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'] }}{% if system_domain != '' %},{{ hostvars[host]['inventory_hostname'] }}.{{ system_domain }}{% endif %}{% if not loop.last %},{% endif %}{% endfor %}{% if system_vip_address != '' %},{{ system_vip_address }},{{ system_vip_domain }}{% endif %}"
+
+- name: add proxy settings to /etc/environment
+  lineinfile:
+    dest: /etc/environment
+    line: "{{ item.var }}={{ item.value }}"
+    regexp: ".*{{ item.var }}.*$"
+    state: present
+  with_items:
+    - { var: "http_proxy", value: "{{ system_http_proxy }}" }
+    - { var: "https_proxy", value: "{{ system_https_proxy }}" }
+    - { var: "no_proxy", value: "{{ all_ip }}" }
+
+- name: set DefaultEnvironment in systemd
+  lineinfile:
+    dest: /etc/systemd/system.conf
+    line: "DefaultEnvironment=\"http_proxy={{ system_http_proxy }}\" \"https_proxy={{ system_https_proxy }}\" \"no_proxy={{ all_ip }}\""
+    regexp: ".*DefaultEnvironment.*$"
+    state: present
+  when: ansible_service_mgr == "systemd"
+
+- name: Set yum proxy
+  lineinfile:
+    dest: /etc/yum.conf
+    state: present
+    regexp: "{{ system_http_proxy }}"
+    insertafter: EOF
+    line: "proxy={{ system_http_proxy }}"
+  ignore_errors: yes
+  when: ansible_pkg_mgr == "yum"
+
+- name: Add proxy support
+  template:
+    src: apt_proxy_conf.j2
+    dest: /etc/apt/apt.conf.d/80proxy
+  when: ansible_pkg_mgr == "apt"
+
+

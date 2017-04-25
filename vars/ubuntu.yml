@@ -1,7 +1,9 @@
 ---
-basic_packages:
+system_packages:
   - tree
   - vim
   - lsof
   - mlocate
   - haveged
+  - curl
+  - htop

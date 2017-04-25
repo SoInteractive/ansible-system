@@ -1,13 +1,18 @@
 ---
-recofigure_repositories: False
+system_http_proxy: "{{ http_proxy if http_proxy is defined else '' }}"
+system_https_proxy: "{{ https_proxy if https_proxy is defined else system_http_proxy }}"
+system_domain: ""
+system_vip_address: ""
+system_vip_domain: ""
 
-set_global_proxy: False
+system_recofigure_repositories: False
 
 system_disable_ipv6: True
 
 system_upgrade: False
+system_autoupgrades: true
 
-#motd_message
+system_motd: ""
 system_max_conn: 1024
 system_syn_backlog: 4096
 system_tw_reuse: 1   # reuse TIME_WAIT connections
