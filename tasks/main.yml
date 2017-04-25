@@ -15,13 +15,16 @@
 
 - include: packages.yml
 
+- include: unattended.yml
+  when: system_autoupgrades
+
 - include: sysctl.yml
 
 - name: Set Message of the Day
   template:
     src: motd.j2
     dest: /etc/motd
-  when: motd_message is defined
+  when: system_motd != ""
 
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"
