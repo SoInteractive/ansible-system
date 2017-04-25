@@ -6,3 +6,4 @@ system_packages:
   - mlocate
   - haveged
   - curl
+  - htop
