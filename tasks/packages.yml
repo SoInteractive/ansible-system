@@ -16,12 +16,19 @@
     when: system_upgrade
   when: ansible_pkg_mgr == "apt"
 
-- name: Upgrade system
-  yum:
-    name: '*'
-    state: latest
-    update_cache: yes
-  when: system_upgrade and ansible_pkg_mgr == "yum"
+- block:
+  - name: Install epel repository
+    yum:
+      name: epel-release
+      state: installed
+  - name: Upgrade system
+
+    yum:
+      name: '*'
+      state: latest
+      update_cache: yes
+    when: system_upgrade
+  when: ansible_pkg_mgr == "yum"
 
 - name: Install basic software
   package:
