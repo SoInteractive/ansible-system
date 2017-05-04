@@ -20,11 +20,17 @@
 
 - include: sysctl.yml
 
-- name: Set Message of the Day
+- name: Set Message of the Day from variable
   template:
     src: motd.j2
     dest: /etc/motd
   when: system_motd != ""
+
+- name: Copy default Message of the Day
+  copy:
+    src: motd
+    dest: /etc/motd
+  when: system_motd == ""
 
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"
