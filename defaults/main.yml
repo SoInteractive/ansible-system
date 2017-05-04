@@ -12,7 +12,20 @@ system_disable_ipv6: True
 system_upgrade: False
 system_autoupgrades: true
 
-system_motd: ""
+system_motd: |
+  [00;35m
+    ###############
+    ###############
+    ###############
+         ##########   [01;37mSointeractive Server[00;35m
+         ##########
+         ##########      [01;37mWelcome back![00;35m
+    #####     #####
+    #####     #####
+    #####     #####
+  [0m
+
+
 system_max_conn: 1024
 system_syn_backlog: 4096
 system_tw_reuse: 1   # reuse TIME_WAIT connections
