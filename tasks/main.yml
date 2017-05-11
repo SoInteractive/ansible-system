@@ -32,6 +32,8 @@
     dest: /etc/motd
   when: system_motd == ""
 
+- include: hosts.yml
+
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"
 #  async: 0
