@@ -7,3 +7,4 @@ system_packages:
   - curl
   - mlocate
   - htop
+  - libselinux-python
