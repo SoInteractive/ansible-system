@@ -1,9 +1,11 @@
 ---
 system_http_proxy: "{{ http_proxy if http_proxy is defined else '' }}"
 system_https_proxy: "{{ https_proxy if https_proxy is defined else system_http_proxy }}"
-system_domain: ""
 system_vip_address: ""
 system_vip_domain: ""
+
+system_fqdn: "{{ inventory_hostname }}"
+system_custom_hosts: []
 
 system_recofigure_repositories: False
 
