@@ -32,6 +32,14 @@
     dest: /etc/motd
   when: system_motd == ""
 
+- name: Enable motd in PAM
+  lineinfile:
+    dest: "/etc/pam.d/login"
+    backup: yes
+    regexp: "^session(.*)pam_motd.so(.*)$"
+    line: "session  optional  pam_motd.so  motd=/etc/motd"
+    state: present
+
 - include: hosts.yml
 
 #- name: Reboot
