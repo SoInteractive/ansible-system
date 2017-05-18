@@ -5,6 +5,7 @@ system_vip_address: ""
 system_vip_domain: ""
 
 system_fqdn: "{{ inventory_hostname }}"
+system_interface: "{{ ansible_default_ipv4.interface }}"
 system_custom_hosts: []
 
 system_recofigure_repositories: False
