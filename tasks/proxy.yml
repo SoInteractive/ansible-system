@@ -1,11 +1,6 @@
 ---
 - set_fact:
-    all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'] }},{{ hostvars[host]['system_fqdn'] }}{% if not loop.last %},{% endif %}{% endfor %}{% if system_vip_address != '' %},{{ system_vip_address }},{{ system_vip_domain }}{% endif %}"
-  when: inventory_hostname != system_fqdn
-
-- set_fact:
-    all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'] }}{% if not loop.last %},{% endif %}{% endfor %}{% if system_vip_address != '' %},{{ system_vip_address }},{{ system_vip_domain }}{% endif %}"
-  when: inventory_hostname == system_fqdn
+    all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'].split('.')[0] }},{{ hostvars[host]['inventory_hostname'] }}{% if not loop.last %},{% endif %}{% endfor %}{% if system_vip_address != '' %},{{ system_vip_address }},{{ system_vip_domain }}{% endif %}"
 
 - name: add proxy settings to /etc/environment
   lineinfile:
