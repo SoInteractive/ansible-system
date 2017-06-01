@@ -40,3 +40,9 @@
   service:
     name: haveged
     state: started
+
+- name: Make Vim great again
+  alternatives:
+    name: editor
+    path: /usr/bin/vim.basic
+  when: ansible_pkg_mgr == "apt"
