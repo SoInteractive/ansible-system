@@ -1,12 +1,5 @@
 #!groovy
 
-/* Only keep the 10 most recent builds. */
-/*def projectProperties = [
-    [$class: 'BuildDiscarderProperty',strategy: [$class: 'LogRotator', numToKeepStr: '5']],
-]
-
-properties(projectProperties)*/
-
 /* Declarative pipeline */
 pipeline {
   agent {
@@ -14,6 +7,11 @@ pipeline {
       label 'master'
       customWorkspace 'workspace/system'
     }
+  }
+  options {
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '30'))
+    timeout(time: 15, unit: 'MINUTES')
   }
   stages {
     stage('Playbook syntax check') {
