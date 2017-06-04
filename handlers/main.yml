@@ -1,6 +1,12 @@
 ---
 - name: restart yum-cron
-  service: 
+  service:
     name: yum-cron
     state: restarted
+    enabled: yes
+
+- name: start haveged
+  service:
+    name: haveged
+    state: started
     enabled: yes

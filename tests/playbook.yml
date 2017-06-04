@@ -1,0 +1,6 @@
+---
+- hosts: all
+  roles:
+    - system
+  vars:
+    system_upgrade: true

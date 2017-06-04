@@ -1,5 +1,6 @@
 ---
-- set_fact:
+- name: Register all IPs communicating without http proxy
+  set_fact:
     all_ip: "127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] }},{{ hostvars[host]['inventory_hostname'].split('.')[0] }},{{ hostvars[host]['inventory_hostname'] }}{% if not loop.last %},{% endif %}{% endfor %}{% if system_vip_address != '' %},{{ system_vip_address }},{{ system_vip_domain }}{% endif %}"
 
 - name: add proxy settings to /etc/environment
@@ -36,5 +37,3 @@
     src: apt_proxy_conf.j2
     dest: /etc/apt/apt.conf.d/80proxy
   when: ansible_pkg_mgr == "apt"
-
-

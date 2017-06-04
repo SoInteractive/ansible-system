@@ -3,21 +3,21 @@ galaxy_info:
   author: Pawel Krupa
   description: Role template
   company: Sointeractive
+  license: MIT
   min_ansible_version: 1.2
   platforms:
    - name: EL
      versions:
-       - all
+       - 7
    - name: Ubuntu
      versions:
-       - 14.04
-       - 16.04
+       - trusty
+       - xenial
   galaxy_tags:
    - basics
    - vim
-   - base software
    - entropy
+   - system
 
 #dependencies:
 #  - { role: username.common }
-

@@ -18,6 +18,7 @@
     - { var: "net.ipv4.tcp_max_syn_backlog", value: "{{ system_syn_backlog }}" }
     - { var: "net.ipv4.tcp_tw_reuse", value: "{{ system_tw_reuse }}" }
     - { var: "net.ipv4.tcp_tw_recycle", value: "{{ system_tw_recycle }}" }
+  ignore_errors: true
 
 - name: additional sysctl options
   sysctl:
@@ -26,4 +27,3 @@
     sysctl_set: yes
     state: present
   with_items: "{{ system_sysctl }}"
-

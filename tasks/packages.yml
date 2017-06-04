@@ -5,14 +5,19 @@
       src: sources.list.j2
       dest: /etc/apt/sources.list
     when: system_recofigure_repositories
-  
-  - name: Update apt cache
-    apt:
-      update_cache: yes
 
-  # Cannot upgrade via "apt" module since it depends on aptitude
+  - name: Install apt dependencies
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - aptitude
+      - python-apt
+
   - name: Upgrade system
-    command: apt-get -y upgrade
+    apt:
+      upgrade: yes
     when: system_upgrade
   when: ansible_pkg_mgr == "apt"
 
@@ -21,13 +26,15 @@
     yum:
       name: epel-release
       state: installed
-  - name: Upgrade system
 
+  # Disable linter on this task, since ANSIBLE0010 doesn't apply here
+  - name: Upgrade system
     yum:
       name: '*'
       state: latest
       update_cache: yes
     when: system_upgrade
+    tags: skip_ansible_lint
   when: ansible_pkg_mgr == "yum"
 
 - name: Install basic software
@@ -35,11 +42,7 @@
     name: "{{ item }}"
     state: installed
   with_items: "{{ system_packages }}"
-
-- name: Ensure haveged is started
-  service:
-    name: haveged
-    state: started
+  notify: start haveged
 
 - name: Make Vim great again
   alternatives:
