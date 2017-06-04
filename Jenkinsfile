@@ -12,7 +12,7 @@ pipeline {
   agent {
     node {
       label 'master'
-      customWorkspace 'workspace/nginx'
+      customWorkspace 'workspace/system'
     }
   }
   stages {
