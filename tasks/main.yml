@@ -43,6 +43,8 @@
 - include: hosts.yml
   when: ansible_virtualization_type != "docker"
 
+- include: locale.yml
+
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"
 #  async: 0
