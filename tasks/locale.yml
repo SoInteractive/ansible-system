@@ -1,6 +1,4 @@
 ---
-# task sprawdzic locale
-# taske stworzyc locale
 - name: Configure locale
   lineinfile:
     dest: /etc/locale.gen
