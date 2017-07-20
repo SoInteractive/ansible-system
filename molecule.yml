@@ -14,4 +14,4 @@ docker:
     - name: system-centos
       image: centos/systemd
       image_version: latest
-privileged: true
+      privileged: true
