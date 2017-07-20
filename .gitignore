@@ -4,3 +4,4 @@
 .molecule
 .cache
 **__pycache__**
+*.pyc

@@ -44,3 +44,14 @@ def test_packages(Package, SystemInfo):
         for package in present:
             p = Package(package)
             assert p.is_installed
+
+
+def test_sysctl_vars(Sysctl):
+    assert Sysctl("net.ipv6.conf.all.disable_ipv6")
+
+    # cannot test in Docker
+
+    # assert Sysctl("net.core.somaxconn") == 1024
+    # assert Sysctl("net.ipv4.tcp_max_syn_backlog") == 4096
+    # assert Sysctl("net.ipv4.tcp_tw_reuse")
+    # assert not Sysctl("net.ipv4.tcp_tw_recycle")
