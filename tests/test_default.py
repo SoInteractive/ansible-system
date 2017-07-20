@@ -63,3 +63,23 @@ def test_locale(File, SystemInfo):
         f = File(locale)
         assert f.is_file
         assert not f.contains("# en_US.UTF-8 UTF-8")
+
+
+def test_unattended(File):
+    if File("/etc/apt").is_directory:
+        present = [
+            "/etc/apt/apt.conf.d/20auto-upgrades",
+            "/etc/apt/apt.conf.d/50unattended-upgrades"
+        ]
+        if present:
+            for f in present:
+                ff = File(f)
+                assert ff.is_file
+    elif File("/etc/yum").is_directory:
+        present = [
+            "/etc/yum/yum-cron.conf"
+        ]
+        if present:
+            for f in present:
+                ff = File(f)
+                assert ff.is_file
