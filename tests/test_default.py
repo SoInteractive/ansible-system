@@ -55,3 +55,11 @@ def test_sysctl_vars(Sysctl):
     # assert Sysctl("net.ipv4.tcp_max_syn_backlog") == 4096
     # assert Sysctl("net.ipv4.tcp_tw_reuse")
     # assert not Sysctl("net.ipv4.tcp_tw_recycle")
+
+
+def test_locale(File, SystemInfo):
+    if SystemInfo.distribution == "ubuntu":
+        locale = "/etc/locale.gen"
+        f = File(locale)
+        assert f.is_file
+        assert not f.contains("# en_US.UTF-8 UTF-8")
