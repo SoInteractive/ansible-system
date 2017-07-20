@@ -16,14 +16,16 @@ def test_files(File):
             assert f.is_file
 
 
-def test_service(Service):
-    present = [
-        "haveged"
-    ]
-    if present:
-        for service in present:
-            s = Service(service)
-            assert s.is_enabled
+def test_service(SystemInfo, Service):
+    # Problems with testing on docker with centos
+    if SystemInfo.distribution == "ubuntu":
+        present = [
+            "haveged"
+        ]
+        if present:
+            for service in present:
+                s = Service(service)
+                assert s.is_enabled
 
 
 def test_packages(Package, SystemInfo):
