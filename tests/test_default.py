@@ -16,7 +16,7 @@ def test_files(File):
             assert f.is_file
 
 
-def test_service(SystemInfo, Service):
+def test_service(Service):
     present = [
         "haveged"
     ]
