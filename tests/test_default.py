@@ -17,15 +17,13 @@ def test_files(File):
 
 
 def test_service(SystemInfo, Service):
-    # Problems with testing on docker with centos
-    if SystemInfo.distribution == "ubuntu":
-        present = [
-            "haveged"
-        ]
-        if present:
-            for service in present:
-                s = Service(service)
-                assert s.is_enabled
+    present = [
+        "haveged"
+    ]
+    if present:
+        for service in present:
+            s = Service(service)
+            assert s.is_enabled
 
 
 def test_packages(Package, SystemInfo):
@@ -64,7 +62,10 @@ def test_locale(File, SystemInfo):
         locale = "/etc/locale.gen"
         f = File(locale)
         assert f.is_file
-        assert not f.contains("# en_US.UTF-8 UTF-8")
+        assert (
+            not f.contains("# en_US.UTF-8 UTF-8") and
+            f.contains("en_US.UTF-8 UTF-8")
+            )
 
 
 def test_unattended(File):

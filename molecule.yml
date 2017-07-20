@@ -1,6 +1,6 @@
 ---
 ansible:
-  playbook: playbook.yml
+  playbook: tests/playbook.yml
 driver:
   name: docker
 verifier:
