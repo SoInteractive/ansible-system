@@ -1,0 +1,33 @@
+---
+- name: Create motd directory
+  file:
+    dest: /etc/motd.d
+    state: directory
+
+- name: Copy Sointeractive Logo as motd
+  copy:
+    src: motd.logo
+    dest: /etc/motd.d/01logo
+
+- name: Set Message of the Day from variable
+  template:
+    src: motd.j2
+    dest: /etc/motd.d/02text
+
+- name: Copy motd trailing line
+  copy:
+    src: motd.end
+    dest: /etc/motd.d/03end
+
+- name: Assemble Message of the Day
+  assemble:
+    src: /etc/motd.d
+    dest: /etc/motd
+
+- name: Enable motd in PAM
+  lineinfile:
+    dest: "/etc/pam.d/login"
+    backup: yes
+    regexp: "^session(.*)pam_motd.so(.*)$"
+    line: "session  optional  pam_motd.so  motd=/etc/motd"
+    state: present
