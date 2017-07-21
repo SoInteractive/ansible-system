@@ -6,13 +6,18 @@
 
 - name: Copy Sointeractive Logo as motd
   copy:
-    src: motd
+    src: motd.logo
     dest: /etc/motd.d/01logo
 
 - name: Set Message of the Day from variable
   template:
     src: motd.j2
     dest: /etc/motd.d/02text
+
+- name: Copy motd trailing line
+  copy:
+    src: motd.end
+    dest: /etc/motd.d/03end
 
 - name: Assemble Message of the Day
   assemble:
