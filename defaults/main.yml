@@ -17,7 +17,7 @@ system_disable_ipv6: True
 system_upgrade: False
 system_autoupgrades: true
 
-system_motd: "       hi :-)"
+system_motd: " Hi :-) \n\n Welcome to {{ansible_host}} server"
 
 system_max_conn: 1024
 system_syn_backlog: 4096
