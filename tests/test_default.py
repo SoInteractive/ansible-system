@@ -6,6 +6,8 @@ testinfra_hosts = AnsibleRunner('.molecule/ansible_inventory').get_hosts('all')
 def test_files(File):
     present = [
         "/etc/motd",
+        "/etc/motd.d/01logo",
+        "/etc/motd.d/02text",
         "/etc/pam.d/login",
         "/etc/systemd/system.conf"
     ]
