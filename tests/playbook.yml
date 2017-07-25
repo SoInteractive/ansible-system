@@ -4,3 +4,4 @@
     - system
   vars:
     system_upgrade: true
+    system_log_agregator: "127.0.0.1:514"
