@@ -27,6 +27,9 @@
 
 - include: locale.yml
 
+- include: logs.yml
+  when: system_log_agregator != ""
+
 #- name: Reboot
 #  command: shutdown -r now "Ansible updates triggered"
 #  async: 0

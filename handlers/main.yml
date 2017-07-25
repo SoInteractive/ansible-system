@@ -10,3 +10,13 @@
     name: haveged
     state: started
     enabled: yes
+
+- name: restart journald
+  service:
+    name: systemd-journald
+    state: restarted
+
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
