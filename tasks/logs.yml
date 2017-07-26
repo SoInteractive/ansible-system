@@ -1,4 +1,9 @@
 ---
+- name: Ensure rsyslog is installed
+  package:
+    name: rsyslog
+    state: installed
+
 - name: Create rsyslog config
   template:
     src: rsyslog.j2

@@ -9,7 +9,8 @@ def test_files(File):
         "/etc/motd.d/01logo",
         "/etc/motd.d/02text",
         "/etc/pam.d/login",
-        "/etc/systemd/system.conf"
+        "/etc/systemd/system.conf",
+        "/etc/rsyslog.d/90-logforwarder.conf"
     ]
     if present:
         for file in present:
@@ -40,7 +41,8 @@ def test_packages(Package, SystemInfo):
         "mlocate",
         "haveged",
         "curl",
-        "htop"
+        "htop",
+        "rsyslog"
     ]
     if present:
         for package in present:
