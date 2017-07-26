@@ -1,0 +1,17 @@
+---
+- name: Ensure rsyslog is installed
+  package:
+    name: rsyslog
+    state: installed
+
+- name: Create rsyslog config
+  template:
+    src: rsyslog.j2
+    dest: /etc/rsyslog.d/90-logforwarder.conf
+  notify: restart rsyslog
+
+- name: Configure journald to forward logs to rsyslog
+  lineinfile:
+    dest: /etc/systemd/journald.conf
+    line: "ForwardToSyslog=yes"
+  notify: restart journald
