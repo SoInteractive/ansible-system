@@ -11,6 +11,9 @@
     state: started
     enabled: yes
 
+- name: reload systemd
+  command: systemctl daemon-reload
+
 - name: restart journald
   service:
     name: systemd-journald
