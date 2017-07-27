@@ -21,6 +21,7 @@
     regexp: ".*DefaultEnvironment.*$"
     state: present
   when: ansible_service_mgr == "systemd"
+  notify: restart systemd
 
 - name: Set yum proxy
   lineinfile:
