@@ -21,6 +21,7 @@
 - include: sysctl.yml
 
 - include: motd.yml
+  when: system_motd != ""
 
 - include: hosts.yml
   when: ansible_virtualization_type != "docker"
