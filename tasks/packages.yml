@@ -19,7 +19,7 @@
     apt:
       upgrade: yes
     when: system_upgrade
-    register: upgrade_status
+    notify: reboot server
   when: ansible_pkg_mgr == "apt"
 
 - block:
@@ -35,7 +35,7 @@
       state: latest
       update_cache: yes
     when: system_upgrade
-    register: upgrade_status
+    notify: reboot server
     tags: skip_ansible_lint
   when: ansible_pkg_mgr == "yum"
 
@@ -53,26 +53,3 @@
   when: ansible_pkg_mgr == "apt"
 
 - meta: flush_handlers
-  
-- name: Reboot server
-  command: /sbin/reboot
-  async: 0
-  poll: 0
-  ignore_errors: true
-  failed_when: false
-  when: 
-    - system_upgrade
-    - upgrade_status|changed | default(false)
-    - ansible_virtualization_type != "docker"
-  
-- name: Wait for the server to finish rebooting
-  become: no
-  wait_for:
-    host: "{{ ansible_host | default(inventory_hostname) }}"
-    search_regex: "OpenSSH"
-    port: 22
-    timeout: 300
-  when: 
-    - system_upgrade
-    - upgrade_status|changed
-    - ansible_virtualization_type != "docker"
