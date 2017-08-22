@@ -51,15 +51,19 @@
     name: editor
     path: /usr/bin/vim.basic
   when: ansible_pkg_mgr == "apt"
+
+- meta: flush_handlers
   
 - name: Reboot server
-  command: /sbin/reboot
+  shell: reboot
   async: 0
   poll: 0
   ignore_errors: true
+  failed_when: false
   when: 
     - system_upgrade
-    - upgrade_status|changed
+    - upgrade_status|changed | default(false)
+    - ansible_virtualization_type != "docker"
   
 - name: Wait for the server to finish rebooting
   become: no
@@ -71,3 +75,4 @@
   when: 
     - system_upgrade
     - upgrade_status|changed
+    - ansible_virtualization_type != "docker"
