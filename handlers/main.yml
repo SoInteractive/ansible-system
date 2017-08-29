@@ -24,3 +24,23 @@
     name: rsyslog
     state: restarted
   when: ansible_os_family == "Debian"
+
+- name: reboot server
+  command: /sbin/reboot
+  async: 0
+  poll: 0
+  ignore_errors: true
+  failed_when: false
+  when: ansible_virtualization_type != "docker"
+  notify: wait for the server to finish rebooting
+  tags:
+    - skip_ansible_lint
+
+- name: wait for the server to finish rebooting
+  become: no
+  wait_for:
+    host: "{{ ansible_host | default(inventory_hostname) }}"
+    search_regex: "OpenSSH"
+    port: 22
+    timeout: 300
+  when: ansible_virtualization_type != "docker"
