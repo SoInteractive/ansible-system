@@ -1,11 +1,9 @@
 ---
 system_http_proxy: "{{ http_proxy if http_proxy is defined else '' }}"
 system_https_proxy: "{{ https_proxy if https_proxy is defined else system_http_proxy }}"
-system_vip_address: ""
-system_vip_domain: ""
 
 system_interface: "{{ ansible_default_ipv4.interface }}"
-system_domain: "local"
+system_fqdn: "{{ ansible_fqdn | default(ansible_host) | default(inventory_hostname) }}"
 system_custom_hosts: []
 #system_custom_hosts:
 #  - name: "example.com"

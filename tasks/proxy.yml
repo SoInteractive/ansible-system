@@ -1,7 +1,7 @@
 ---
 - name: Register all IPs communicating without http proxy
   set_fact:
-    all_ip: "0.0.0.0,127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] if hostvars[host]['ansible_default_ipv4'] is defined else '127.0.0.1' }},{{ hostvars[host]['inventory_hostname'].split('.')[0] }},{{ hostvars[host]['inventory_hostname'] }}{% if not loop.last %},{% endif %}{% endfor %}{% if system_vip_address != '' %},{{ system_vip_address }},{{ system_vip_domain }}{% endif %}"
+    all_ip: "0.0.0.0,127.0.0.1,localhost,{% for host in groups['all'] %}{{ hostvars[host]['ansible_default_ipv4']['address'] if hostvars[host]['ansible_default_ipv4'] is defined else '127.0.0.1' }},{{ hostvars[host]['system_fqdn'].split('.')[0] }},{{ hostvars[host]['system_fqdn'] }}{% if not loop.last %},{% endif %}{% endfor %}{% for host in system_custom_hosts %},{{ host.name }},{{ host.ip }}{% endfor %}"
 
 - name: add proxy settings to /etc/environment
   lineinfile:
