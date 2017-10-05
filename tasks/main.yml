@@ -10,6 +10,10 @@
   tags:
     - always
 
+- fail:
+    msg: "system_fqdn is an ip address!!!"
+  when: system_fqdn | search('[a-zA-Z]') == 0
+
 - include: proxy.yml
   when: system_http_proxy != ""
 
