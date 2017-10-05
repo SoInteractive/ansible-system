@@ -26,7 +26,7 @@
   when: ansible_os_family == "Debian"
 
 - name: reboot server
-  shell: sleep 2 && /usr/sbin/reboot
+  shell: /usr/sbin/reboot
   async: 1
   poll: 0
   ignore_errors: true
@@ -38,10 +38,7 @@
 
 - name: wait for the server to finish rebooting
   become: no
-  wait_for:
-    host: "{{ ansible_host | default(inventory_hostname) }}"
-    search_regex: "OpenSSH"
-    port: 22
+  wait_for_connection:
     delay: 20
     timeout: 300
   when: ansible_virtualization_type != "docker"
