@@ -9,6 +9,10 @@
     - "{{ ansible_os_family | lower }}.yml"
   tags:
     - always
+- name: Check if system_fqdn is a domain
+  fail:
+    msg: "system_fqdn is an ip address!!!"
+  when: system_fqdn | search('[a-zA-Z]') == 0
 
 - include: proxy.yml
   when: system_http_proxy != ""
