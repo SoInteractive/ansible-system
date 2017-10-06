@@ -1,27 +1,26 @@
 ---
 - name: restart yum-cron
-  service:
+  systemd:
     name: yum-cron
     state: restarted
     enabled: yes
 
 - name: start haveged
-  service:
+  systemd:
     name: haveged
     state: started
     enabled: yes
 
 - name: reload systemd
   systemd:
-    daemon_reload: yes
 
 - name: restart journald
-  service:
+  systemd:
     name: systemd-journald
     state: restarted
 
 - name: restart rsyslog
-  service:
+  systemd:
     name: rsyslog
     state: restarted
   when: ansible_os_family == "Debian"
