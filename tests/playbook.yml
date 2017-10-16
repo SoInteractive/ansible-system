@@ -1,7 +1,7 @@
 ---
 - hosts: all
   roles:
-    - system
+    - ansible-system
   vars:
     system_upgrade: true
     system_log_aggregator: "127.0.0.1:514"
