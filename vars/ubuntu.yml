@@ -8,3 +8,5 @@ system_packages:
   - curl
   - htop
   - locales
+
+system_bash_config_path: /etc/bash.bashrc
