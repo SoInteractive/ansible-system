@@ -8,3 +8,5 @@ system_packages:
   - mlocate
   - htop
   - libselinux-python
+
+system_bash_config_path: /etc/bashrc
