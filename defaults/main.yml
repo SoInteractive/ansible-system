@@ -16,7 +16,8 @@ system_disable_ipv6: True
 system_upgrade: False
 system_autoupgrades: true
 
-system_motd: "       hi :-)"
+system_motd_sointeractive: True
+system_motd: "  Welcome to {{ system_fqdn }}"
 
 system_log_aggregator: ""
 #system_log_agregator: "127.0.0.1:10514"
