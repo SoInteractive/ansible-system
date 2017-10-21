@@ -83,7 +83,7 @@ def test_unattended(host):
             for f in present:
                 ff = host.file(f)
                 assert ff.is_file
-        elif host.file("/etc/yum").is_directory:
+    elif host.file("/etc/yum").is_directory:
         present = [
             "/etc/yum/yum-cron.conf"
         ]
