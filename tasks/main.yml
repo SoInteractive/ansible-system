@@ -9,7 +9,8 @@
     - "{{ ansible_os_family | lower }}.yml"
   tags:
     - always
-- name: Check if system_fqdn is a domain
+
+- name: Fail when system_fqdn is not a domain
   fail:
     msg: "system_fqdn is an ip address!!!"
   when: system_fqdn | search('[a-zA-Z]') == 0
