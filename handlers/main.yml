@@ -15,17 +15,6 @@
   systemd:
     daemon_reload: yes
 
-- name: restart journald
-  systemd:
-    name: systemd-journald
-    state: restarted
-
-- name: restart rsyslog
-  systemd:
-    name: rsyslog
-    state: restarted
-  when: ansible_os_family == "Debian"
-
 - name: reboot server
   shell: /usr/sbin/reboot
   async: 1
