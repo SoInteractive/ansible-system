@@ -19,9 +19,6 @@ system_autoupgrades: true
 system_motd_sointeractive: True
 system_motd: "  Welcome to {{ system_fqdn }}"
 
-system_log_aggregator: ""
-#system_log_agregator: "127.0.0.1:10514"
-
 system_max_conn: 1024
 system_syn_backlog: 4096
 system_tw_reuse: 1   # reuse TIME_WAIT connections

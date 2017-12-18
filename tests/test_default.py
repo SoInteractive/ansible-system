@@ -11,7 +11,6 @@ def test_files(host):
         "/etc/motd.d/03end",
         "/etc/pam.d/login",
         "/etc/systemd/system.conf",
-        "/etc/rsyslog.d/90-logforwarder.conf"
     ]
     if present:
         for file in present:
@@ -43,7 +42,6 @@ def test_packages(host):
         "haveged",
         "curl",
         "htop",
-        "rsyslog"
     ]
     if present:
         for package in present:

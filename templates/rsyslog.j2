@@ -1,6 +1,0 @@
-# {{ ansible_managed }}
-$ModLoad imuxsock
-$OmitLocalLogging off
-$SystemLogSocketName /run/systemd/journal/syslog
-
-*.* @{{ system_log_aggregator }};RSYSLOG_SyslogProtocol23Format
