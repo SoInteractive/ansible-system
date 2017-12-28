@@ -38,19 +38,11 @@
 
 - include: locale.yml
 
-#- name: Reboot
-#  command: shutdown -r now "Ansible updates triggered"
-#  async: 0
-#  poll: 0
-#  ignore_errors: true
-#  when: upgrade_system
-#
-#- name: Wait for server to come back
-#  become: no
-#  local_action:
-#    module: wait_for
-#    host: "{{ ansible_host }}"
-#    state: started
-#    delay: 30
-#    timeout: 300
-#  when: upgrade_system
+- include: reboot.yml
+  with_items: "{{ ansible_play_hosts }}"
+  when:
+    - hostvars[item].inventory_hostname == inventory_hostname
+    - ansible_virtualization_type != "docker"
+    - upgraded_apt is changed or upgraded_yum is changed
+
+- meta: reset_connection
