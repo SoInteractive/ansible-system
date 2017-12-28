@@ -14,21 +14,3 @@
 - name: reload systemd
   systemd:
     daemon_reload: yes
-
-- name: reboot server
-  shell: /usr/sbin/reboot
-  async: 1
-  poll: 0
-  ignore_errors: true
-#  failed_when: false
-  when: ansible_virtualization_type != "docker"
-  notify: wait for the server to finish rebooting
-  tags:
-    - skip_ansible_lint
-
-- name: wait for the server to finish rebooting
-  become: no
-  wait_for_connection:
-    delay: 20
-    timeout: 300
-  when: ansible_virtualization_type != "docker"
