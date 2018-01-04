@@ -1,0 +1,13 @@
+127.0.0.1 localhost
+127.0.1.1 {{ inventory_hostname }} {{ system_fqdn }} 
+
+{% for item in groups['all'] %}
+{% set host = hostvars[item] %}
+{% set fqdn = host.ansible_fqdn | default(host.ansible_host) | default(host.inventory_hostname) %}
+{% set interface = host['ansible_' + system_interface] %}
+{{ interface['ipv4']['address'] if interface is defined else '127.0.0.1' }} {{ fqdn.split('.')[0] }} {{ fqdn }}
+{% endfor %}
+
+{% for item in system_custom_hosts %}
+{{ item.ip }} {{ item.name }}
+{% endfor %}
