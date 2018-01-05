@@ -1,6 +1,9 @@
 ---
 ansible:
   playbook: tests/playbook.yml
+dependency:
+  name: galaxy
+  requirements_file: requirements.yml
 driver:
   name: docker
 verifier:
