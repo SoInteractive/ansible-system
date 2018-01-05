@@ -20,4 +20,4 @@ galaxy_info:
 
 dependencies:
   # disabled core dumps don't work with ansible<2.4.0
-  - { role: ansible-os-hardening, os_security_kernel_enable_core_dump: true, tags: [ 'skip_ansible_lint' ] }
+  - { role: dev-sec.os-hardening, os_security_kernel_enable_core_dump: true, tags: [ 'skip_ansible_lint' ] }
