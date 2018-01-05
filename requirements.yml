@@ -1,2 +1,2 @@
-- src: dev-sec.os-hardeningtests/playbook.yml
+- src: dev-sec.os-hardening
   version: '4.3.0'
