@@ -44,4 +44,3 @@
     - hostvars[item].inventory_hostname == inventory_hostname
     - ansible_virtualization_type != "docker"
     - upgraded_apt is changed or upgraded_yum is changed
-
