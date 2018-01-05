@@ -28,8 +28,6 @@
 - include: unattended.yml
   when: system_autoupgrades
 
-- include: sysctl.yml
-
 - include: motd.yml
   when: system_motd != ""
 
@@ -44,5 +42,3 @@
     - hostvars[item].inventory_hostname == inventory_hostname
     - ansible_virtualization_type != "docker"
     - upgraded_apt is changed or upgraded_yum is changed
-
-- meta: reset_connection

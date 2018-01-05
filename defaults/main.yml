@@ -18,11 +18,3 @@ system_autoupgrades: true
 
 system_motd_sointeractive: True
 system_motd: "  Welcome to {{ system_fqdn }}"
-
-system_max_conn: 1024
-system_syn_backlog: 4096
-system_tw_reuse: 1   # reuse TIME_WAIT connections
-system_tw_recycle: 0 # recycling of TIME_WAIT sockets (use with caution)
-
-system_sysctl: []
-#  - { var: "net.ipv4.tcp_tw_recycle", value: "{{ system_tw_recycle }}" }

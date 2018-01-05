@@ -1,6 +1,9 @@
 ---
 ansible:
   playbook: tests/playbook.yml
+dependency:
+  name: galaxy
+  requirements_file: requirements.yml
 driver:
   name: docker
 verifier:
@@ -15,3 +18,11 @@ docker:
       image: centos/systemd
       image_version: latest
       privileged: true
+molecule:
+  test:
+    sequence:
+      - destroy
+      - syntax
+      - create
+      - converge
+      - verify
