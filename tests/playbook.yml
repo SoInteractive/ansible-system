@@ -1,5 +1,10 @@
 ---
 - hosts: all
+  pre_tasks:
+    - name: Ensure sysctl.conf exists
+      file:
+        path: /etc/sysctl.conf
+        state: touch
   roles:
     - ansible-system
   vars:
