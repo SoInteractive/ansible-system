@@ -45,4 +45,3 @@
     - ansible_virtualization_type != "docker"
     - upgraded_apt is changed or upgraded_yum is changed
 
-- meta: reset_connection
