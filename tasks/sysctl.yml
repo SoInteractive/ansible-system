@@ -1,12 +1,4 @@
 ---
-- name: disable IPv6
-  sysctl:
-    name: net.ipv6.conf.all.disable_ipv6
-    value: 1
-    sysctl_set: yes
-    state: present
-  when: system_disable_ipv6
-
 - name: tune network performace
   sysctl:
     name: "{{ item.var }}"
@@ -19,11 +11,3 @@
     - { var: "net.ipv4.tcp_tw_reuse", value: "{{ system_tw_reuse }}" }
     - { var: "net.ipv4.tcp_tw_recycle", value: "{{ system_tw_recycle }}" }
   ignore_errors: true
-
-- name: additional sysctl options
-  sysctl:
-    name: "{{ item.var }}"
-    value: "{{ item.value }}"
-    sysctl_set: yes
-    state: present
-  with_items: "{{ system_sysctl }}"

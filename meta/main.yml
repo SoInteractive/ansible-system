@@ -18,5 +18,6 @@ galaxy_info:
    - entropy
    - system
 
-#dependencies:
-#  - { role: username.common }
+dependencies:
+  # disabled core dumps don't work with ansible<2.4.0
+  - { role: ansible-os-hardening, os_security_kernel_enable_core_dump: true }
