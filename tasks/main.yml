@@ -28,8 +28,6 @@
 - include: unattended.yml
   when: system_autoupgrades
 
-- include: sysctl.yml
-
 - include: motd.yml
   when: system_motd != ""
 
