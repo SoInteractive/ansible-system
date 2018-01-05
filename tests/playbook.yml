@@ -2,9 +2,9 @@
 - hosts: all
   pre_tasks:
     - name: Ensure sysctl.conf exists
-      file:
-        path: /etc/sysctl.conf
-        state: touch
+      command: touch /etc/sysctl.conf
+      args:
+        creates: /etc/sysctl.conf
   roles:
     - ansible-system
   vars:
