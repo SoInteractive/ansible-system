@@ -49,10 +49,6 @@ sysctl_overwrite:
 Overrides set for dev-sec.ssh-hardening
 ```
 ssh_banner: true
-ssh_host_key_files:
-  - '/etc/ssh/ssh_host_rsa_key'
-  - '/etc/ssh/ssh_host_ecdsa_key'
-  - '/etc/ssh/ssh_host_ed25519_key'
 ```
 
 

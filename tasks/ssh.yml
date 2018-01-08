@@ -6,21 +6,6 @@
     mode: 0755
   when: ansible_distribution|lower == "ubuntu"
 
-- name: Ensure ssh directory exists
-  file:
-    dest: /etc/ssh
-    state: directory
-    mode: 0755
-
-- name: Ensure SSH host keys exist
-  command: "ssh-keygen -t {{ item }} -N '' -f /etc/ssh/ssh_host_{{ item }}_key"
-  args:
-    creates: "/etc/ssh/ssh_host_{{ item }}_key"
-  with_items:
-    - rsa
-    - ecdsa
-    - ed25519
-
 - name: Add warning before SSH login
   template:
     src: banner.txt.j2
