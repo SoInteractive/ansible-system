@@ -27,6 +27,34 @@ It also installs following software:
   - mlocate
   - curl
   - htop
+  - SSH client
+  - SSH server
+
+Dependencies
+-----------
+
+This role is dependant on following roles:
+  - dev-sec.os-hardening
+  - dev-sec.ssh-hardening
+
+Overrides set for dev-sec.ssh-hardening
+```
+sysctl_overwrite:
+  net.core.somaxconn: 1024
+  net.ipv4.tcp_max_syn_backlog: 4096
+  net.ipv4.tcp_tw_reuse: 1
+  net.ipv4.tcp_tw_recycle: 0
+```
+
+Overrides set for dev-sec.ssh-hardening
+```
+ssh_banner: true
+ssh_host_key_files:
+  - '/etc/ssh/ssh_host_rsa_key'
+  - '/etc/ssh/ssh_host_ecdsa_key'
+  - '/etc/ssh/ssh_host_ed25519_key'
+```
+
 
 Example usage
 -------------
