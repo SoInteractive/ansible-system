@@ -3,6 +3,19 @@ from testinfra.utils.ansible_runner import AnsibleRunner
 testinfra_hosts = AnsibleRunner('.molecule/ansible_inventory').get_hosts('all')
 
 
+def test_directories(host):
+    present = [
+        "/etc/ssh"
+    ]
+    if host.system_info.distribution != 'centos':
+        present.append('/var/run/sshd')
+    if present:
+        for directory in present:
+            d = host.file(directory)
+            assert d.is_directory
+            assert d.exists
+
+
 def test_files(host):
     present = [
         "/etc/motd",
@@ -11,6 +24,7 @@ def test_files(host):
         "/etc/motd.d/03end",
         "/etc/pam.d/login",
         "/etc/systemd/system.conf",
+        "/etc/ssh/banner.txt"
     ]
     if present:
         for file in present:
@@ -20,8 +34,14 @@ def test_files(host):
 
 
 def test_service(host):
+    if host.system_info.distribution == 'centos':
+        ssh_srv = 'sshd'
+    else:
+        ssh_srv = 'ssh'
+
     present = [
-        "haveged"
+        "haveged",
+        ssh_srv
     ]
     if present:
         for service in present:
@@ -30,18 +50,22 @@ def test_service(host):
 
 
 def test_packages(host):
+    openssh_client = "openssh-client"
     if host.system_info.distribution == 'centos':
-        VIM = 'vim-enhanced'
+        vim = 'vim-enhanced'
+        openssh_client += "s"
     else:
-        VIM = 'vim'
+        vim = 'vim'
     present = [
-        VIM,
+        vim,
         "tree",
         "lsof",
         "mlocate",
         "haveged",
         "curl",
         "htop",
+        "openssh-server",
+        openssh_client
     ]
     if present:
         for package in present:

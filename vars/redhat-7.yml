@@ -8,5 +8,8 @@ system_packages:
   - mlocate
   - htop
   - libselinux-python
+  - openssh-server
+  - openssh-clients
 
 system_bash_config_path: /etc/bashrc
+system_sshd_service: sshd

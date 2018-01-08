@@ -8,5 +8,8 @@ system_packages:
   - curl
   - htop
   - locales
+  - openssh-server
+  - openssh-client
 
 system_bash_config_path: /etc/bash.bashrc
+system_sshd_service: ssh
