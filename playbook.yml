@@ -1,4 +1,10 @@
 ---
 - hosts: all
+  pre_tasks:
+    - name: Ensure ssh directory exists
+      file:
+        dest: /etc/ssh
+        state: directory
+        mode: 0755
   roles:
     - role: system

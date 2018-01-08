@@ -5,6 +5,13 @@
       command: touch /etc/sysctl.conf
       args:
         creates: /etc/sysctl.conf
+
+    - name: Ensure ssh directory exists
+      file:
+        dest: /etc/ssh
+        state: directory
+        mode: 0755
+
   roles:
     - ansible-system
   vars:
