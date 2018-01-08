@@ -31,3 +31,5 @@ dependencies:
   - role: dev-sec.ssh-hardening
     tags: [ 'skip_ansible_lint' ]
     ssh_banner: true
+    ssh_use_pam: true
+    ssh_allow_agent_forwarding: true
