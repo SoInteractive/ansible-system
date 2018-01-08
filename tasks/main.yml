@@ -36,6 +36,8 @@
 
 - include: locale.yml
 
+- include: ssh.yml
+
 - include: reboot.yml
   with_items: "{{ ansible_play_hosts }}"
   when:

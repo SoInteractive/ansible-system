@@ -5,6 +5,26 @@
       command: touch /etc/sysctl.conf
       args:
         creates: /etc/sysctl.conf
+
+    - name: Ensure sshd is installed
+      package:
+        name: "openssh-server"
+        state: installed
+
+    - name: Start SSH service
+      service:
+        name: "sshd"
+        enabled: true
+        state: started
+      when: ansible_distribution|lower == "centos"
+
+    - name: Start SSH service
+      service:
+        name: "ssh"
+        enabled: true
+        state: started
+      when: ansible_distribution|lower == "ubuntu"
+
   roles:
     - ansible-system
   vars:

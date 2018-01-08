@@ -19,8 +19,8 @@ galaxy_info:
    - system
 
 dependencies:
-  # disabled core dumps don't work with ansible<2.4.0
   - role: dev-sec.os-hardening
+    # disabled core dumps don't work with ansible<2.4.0
     os_security_kernel_enable_core_dump: true
     tags: [ 'skip_ansible_lint' ]
     sysctl_overwrite:
@@ -28,3 +28,6 @@ dependencies:
       net.ipv4.tcp_max_syn_backlog: 4096
       net.ipv4.tcp_tw_reuse: 1
       net.ipv4.tcp_tw_recycle: 0
+  - role: dev-sec.ssh-hardening
+    tags: [ 'skip_ansible_lint' ]
+    ssh_banner: true
