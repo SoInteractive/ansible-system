@@ -33,4 +33,3 @@ dependencies:
     ssh_banner: true
     ssh_use_pam: true
     ssh_allow_agent_forwarding: true
-    ssh_allow_tcp_forwarding: true
