@@ -1,4 +1,4 @@
-- src: dev-sec.os-hardening
+- name: dev-sec.os-hardening
   version: '4.3.0'
-- src: dev-sec.ssh-hardening
+- name: dev-sec.ssh-hardening
   version: '4.4.0'
