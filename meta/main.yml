@@ -4,7 +4,7 @@ galaxy_info:
   description: Role template
   company: Sointeractive
   license: MIT
-  min_ansible_version: 2.2
+  min_ansible_version: 2.3
   platforms:
    - name: EL
      versions:
@@ -20,7 +20,7 @@ galaxy_info:
 
 dependencies:
   - role: dev-sec.os-hardening
-#    version: '4.3.0'
+    version: '4.3.0'
     # disabled core dumps don't work with ansible<2.4.0
     os_security_kernel_enable_core_dump: true
     tags: [ 'skip_ansible_lint' ]
@@ -30,7 +30,7 @@ dependencies:
       net.ipv4.tcp_tw_reuse: 1
       net.ipv4.tcp_tw_recycle: 0
   - role: dev-sec.ssh-hardening
-#    version: '4.4.0'
+    version: '4.4.0'
     tags: [ 'skip_ansible_lint' ]
     ssh_banner: true
     ssh_use_pam: true
