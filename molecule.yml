@@ -22,7 +22,7 @@ molecule:
   test:
     sequence:
       - destroy
-      - syntax
+#      - syntax
       - create
       - converge
       - verify
