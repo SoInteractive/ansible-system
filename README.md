@@ -51,6 +51,11 @@ Overrides set for dev-sec.ssh-hardening
 ssh_banner: true
 ```
 
+Set this variable to allow bastion host connections
+```
+ssh_allow_tcp_forwarding: true
+````
+
 
 Example usage
 -------------
