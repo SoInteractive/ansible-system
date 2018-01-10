@@ -25,6 +25,31 @@
         state: started
       when: ansible_distribution|lower == "ubuntu"
 
+    - block:
+      - name: Ensure /boot/grub2/ exists
+        file:
+          path: '/boot/grub2/'
+          state: directory
+      - name: Ensure /boot/grub2/grub.cfg exists
+        file:
+          path: '/boot/grub2/grub.cfg'
+          state: touch
+      when: ansible_distribution|lower == "centos"
+
+    - block:
+      - name: Ensure /boot/grub/ exists
+        file:
+          path: '/boot/grub/'
+          state: directory
+      - name: Ensure /boot/grub/grub.cfg and /boot/grub/menu.lst exists
+        file:
+          path: '/boot/grub/{{ item }}'
+          state: touch
+        with_items:
+          - 'grub.cfg'
+          - 'menu.lst'
+      when: ansible_distribution|lower == "ubuntu"
+
   roles:
     - ansible-system
   vars:

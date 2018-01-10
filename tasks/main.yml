@@ -38,6 +38,8 @@
 
 - include: ssh.yml
 
+- include: hardening.yml
+
 - include: reboot.yml
   with_items: "{{ ansible_play_hosts }}"
   when:

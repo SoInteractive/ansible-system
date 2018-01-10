@@ -24,6 +24,7 @@ def test_files(host):
         "/etc/motd.d/03end",
         "/etc/pam.d/login",
         "/etc/systemd/system.conf",
+        "/etc/ssh/sshd_config",
         "/etc/ssh/banner.txt"
     ]
     if present:
@@ -31,6 +32,27 @@ def test_files(host):
             f = host.file(file)
             assert f.exists
             assert f.is_file
+
+
+def test_permissions(host):
+    restricted = [
+        '/etc/crontab',
+        '/etc/cron.hourly',
+        '/etc/cron.daily',
+        '/etc/cron.weekly',
+        '/etc/cron.monthly',
+        '/etc/cron.d',
+    ]
+    if host.system_info.distribution == 'centos':
+        restricted.append('/boot/grub2/grub.cfg')
+    else:
+        restricted += [
+            '/boot/grub/grub.cfg',
+            '/boot/grub/menu.lst'
+        ]
+    for file in restricted:
+        f = host.file(file)
+        assert f.mode == 0o600
 
 
 def test_service(host):

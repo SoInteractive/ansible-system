@@ -1,0 +1,22 @@
+---
+- name: Set permissions for boot config to 0600
+  file:
+    path: "{{ item }}"
+    mode: 0600
+    owner: root
+    group: root
+  with_items: "{{ system_grub_config_files }}"
+
+- name: Set permissions for crontab files to 0600
+  file:
+    path: "{{ item }}"
+    mode: 0600
+    owner: root
+    group: root
+  with_items:
+    - '/etc/crontab'
+    - '/etc/cron.hourly'
+    - '/etc/cron.daily'
+    - '/etc/cron.weekly'
+    - '/etc/cron.monthly'
+    - '/etc/cron.d'
