@@ -14,3 +14,9 @@
 - name: reload systemd
   systemd:
     daemon_reload: yes
+
+- name: restart timesyncd
+  systemd:
+    name: systemd-timesyncd
+    state: restarted
+    enabled: yes
