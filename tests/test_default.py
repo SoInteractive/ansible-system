@@ -47,8 +47,7 @@ def test_permissions(host):
         restricted.append('/boot/grub2/grub.cfg')
     else:
         restricted += [
-            '/boot/grub/grub.cfg',
-            '/boot/grub/menu.lst'
+            '/boot/grub/grub.cfg'
         ]
     for file in restricted:
         f = host.file(file)
