@@ -30,6 +30,7 @@ dependencies:
       net.ipv4.tcp_tw_reuse: 1
       net.ipv4.tcp_tw_recycle: 0
       net.ipv4.ip_forward: 1
+      fs.file-max: 2097152
   - role: dev-sec.ssh-hardening
     version: '4.4.0'
     tags: [ 'skip_ansible_lint' ]
