@@ -3,7 +3,8 @@
 {% for item in groups['all'] %}
 {% set host = hostvars[item] %}
 {% set fqdn = host.ansible_fqdn | default(host.ansible_host) | default(host.inventory_hostname) %}
-{% set interface = host['ansible_' + system_interface] %}
+{% if fqdn | ipaddr %}{% set fqdn = host.inventory_hostname %}{% endif %}
+{% set interface = host['ansible_%s' | format(system_interface)] %}
 {% if interface is defined and interface['ipv4']['address'] is defined %}
 {{ interface['ipv4']['address'] }} {{ fqdn.split('.')[0] }} {{ fqdn }}
 {% endif %}
