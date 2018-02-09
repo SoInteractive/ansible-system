@@ -40,6 +40,9 @@
 
 - include: hardening.yml
 
+- include: time.yml
+  when: ansible_os_family | lower == "debian"
+
 - include: reboot.yml
   with_items: "{{ ansible_play_hosts }}"
   when:
