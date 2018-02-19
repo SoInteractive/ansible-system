@@ -13,5 +13,5 @@ system_packages:
 
 system_bash_config_path: /etc/bashrc
 system_sshd_service: sshd
-system_grub_config_files:
-  - '/boot/grub2/grub.cfg'
+system_grub_config_files: []
+#  - '/boot/grub2/grub.cfg'

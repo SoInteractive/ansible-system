@@ -41,14 +41,14 @@ def test_permissions(host):
         '/etc/cron.daily',
         '/etc/cron.weekly',
         '/etc/cron.monthly',
-        '/etc/cron.d',
+        '/etc/cron.d'
     ]
-    if host.system_info.distribution == 'centos':
-        restricted.append('/boot/grub2/grub.cfg')
-    else:
-        restricted += [
-            '/boot/grub/grub.cfg'
-        ]
+#    if host.system_info.distribution == 'centos':
+#        restricted.append('/boot/grub2/grub.cfg')
+#    else:
+#        restricted += [
+#            '/boot/grub/grub.cfg'
+#        ]
     for file in restricted:
         f = host.file(file)
         assert f.mode == 0o600
