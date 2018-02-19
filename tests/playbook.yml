@@ -1,5 +1,20 @@
 ---
 - hosts: all
+  become: yes
+  roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
+  vars:
+    os_security_kernel_enable_core_dump: true
+    sysctl_config:
+      net.ipv4.ip_forward: 1
+      fs.file-max: 2097152
+    ssh_banner: true
+    ssh_use_pam: true
+    ssh_allow_agent_forwarding: true
+  tags: [ 'skip_ansible_lint' ]
+
+- hosts: all
   pre_tasks:
     - name: Ensure sysctl.conf exists
       command: touch /etc/sysctl.conf

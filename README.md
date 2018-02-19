@@ -33,7 +33,7 @@ It also installs following software:
 Dependencies
 -----------
 
-This role is dependant on following roles:
+This role is meant to be used with following roles:
   - dev-sec.os-hardening
   - dev-sec.ssh-hardening
 
@@ -65,8 +65,11 @@ Use it in a playbook as follows:
 - hosts: all
   become: true
   roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
     - SoInteractive.system
   vars:
+    - ssh_banner: true
     - system_upgrade: True
 ```
 
