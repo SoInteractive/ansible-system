@@ -8,5 +8,11 @@ system_packages:
   - curl
   - htop
   - locales
+  - openssh-server
+  - openssh-client
 
 system_bash_config_path: /etc/bash.bashrc
+system_sshd_service: ssh
+system_grub_config_files:
+  - '/boot/grub/grub.cfg'
+#  - '/boot/grub/menu.lst'

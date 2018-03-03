@@ -1,5 +1,64 @@
 ---
 - hosts: all
+  become: yes
+  pre_tasks:
+    - name: Ensure sysctl.conf exists
+      command: touch /etc/sysctl.conf
+      args:
+        creates: /etc/sysctl.conf
+    - name: Ensure sshd is installed
+      package:
+        name: "openssh-server"
+        state: installed
+    - name: Start SSH service
+      service:
+        name: "sshd"
+        enabled: true
+        state: started
+      when: ansible_distribution|lower == "centos"
+    - name: Start SSH service
+      service:
+        name: "ssh"
+        enabled: true
+        state: started
+      when: ansible_distribution|lower == "ubuntu"
+    - block:
+      - name: Ensure /boot/grub2/ exists
+        file:
+          path: '/boot/grub2/'
+          state: directory
+      - name: Ensure /boot/grub2/grub.cfg exists
+        file:
+          path: '/boot/grub2/grub.cfg'
+          state: touch
+      when: ansible_distribution|lower == "centos"
+    - block:
+      - name: Ensure /boot/grub/ exists
+        file:
+          path: '/boot/grub/'
+          state: directory
+      - name: Ensure /boot/grub/grub.cfg and /boot/grub/menu.lst exists
+        file:
+          path: '/boot/grub/{{ item }}'
+          state: touch
+        with_items:
+          - 'grub.cfg'
+          - 'menu.lst'
+      when: ansible_distribution|lower == "ubuntu"
+  roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
+  vars:
+    os_security_kernel_enable_core_dump: true
+    sysctl_config:
+      net.ipv4.ip_forward: 1
+      fs.file-max: 2097152
+    ssh_banner: true
+    ssh_use_pam: true
+    ssh_allow_agent_forwarding: true
+  tags: [ 'skip_ansible_lint' ]
+
+- hosts: all
   roles:
     - ansible-system
   vars:

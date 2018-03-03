@@ -1,17 +1,28 @@
 ---
 ansible:
   playbook: tests/playbook.yml
+dependency:
+  name: galaxy
+  requirements_file: requirements.yml
 driver:
   name: docker
 verifier:
   name: testinfra
 docker:
   containers:
-    - name: system-xenial
+    - name: xenial
       image: solita/ubuntu-systemd
       image_version: 16.04
       privileged: true
-    - name: system-centos
+    - name: centos
       image: centos/systemd
       image_version: latest
       privileged: true
+molecule:
+  test:
+    sequence:
+      - destroy
+#      - syntax
+      - create
+      - converge
+      - verify

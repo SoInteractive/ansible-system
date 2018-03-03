@@ -27,6 +27,35 @@ It also installs following software:
   - mlocate
   - curl
   - htop
+  - SSH client
+  - SSH server
+
+Dependencies
+-----------
+
+This role is meant to be used with following roles:
+  - dev-sec.os-hardening
+  - dev-sec.ssh-hardening
+
+Overrides set for dev-sec.ssh-hardening
+```
+sysctl_overwrite:
+  net.core.somaxconn: 1024
+  net.ipv4.tcp_max_syn_backlog: 4096
+  net.ipv4.tcp_tw_reuse: 1
+  net.ipv4.tcp_tw_recycle: 0
+```
+
+Overrides set for dev-sec.ssh-hardening
+```
+ssh_banner: true
+```
+
+Set this variable to allow bastion host connections
+```
+ssh_allow_tcp_forwarding: true
+````
+
 
 Example usage
 -------------
@@ -36,8 +65,11 @@ Use it in a playbook as follows:
 - hosts: all
   become: true
   roles:
+    - dev-sec.os-hardening
+    - dev-sec.ssh-hardening
     - SoInteractive.system
   vars:
+    - ssh_banner: true
     - system_upgrade: True
 ```
 

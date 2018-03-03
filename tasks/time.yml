@@ -1,0 +1,27 @@
+---
+- name: Remove legacy ntp clients
+  package:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - ntp
+    - ntpd
+    - chrony
+    - chronyd
+
+- name: Copy timesyncd configuration
+  template:
+    src: timesyncd.conf.j2
+    dest: /etc/systemd/timesyncd.conf
+    mode: 0644
+  notify: restart timesyncd
+
+# This command is idempotent
+- name: enable timesync
+  command: timedatectl set-ntp true
+  when: not ansible_virtualization_type == 'docker'
+
+# This command is idempotent
+- name: Set proper time zone
+  command: "timedatectl set-timezone {{ system_time_zone }}"
+  when: not ansible_virtualization_type == 'docker'

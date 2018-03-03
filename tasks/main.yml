@@ -9,7 +9,8 @@
     - "{{ ansible_os_family | lower }}.yml"
   tags:
     - always
-- name: Check if system_fqdn is a domain
+
+- name: Fail when system_fqdn is not a domain
   fail:
     msg: "system_fqdn is an ip address!!!"
   when: system_fqdn | search('[a-zA-Z]') == 0
@@ -27,8 +28,6 @@
 - include: unattended.yml
   when: system_autoupgrades
 
-- include: sysctl.yml
-
 - include: motd.yml
   when: system_motd != ""
 
@@ -37,22 +36,16 @@
 
 - include: locale.yml
 
-- include: logs.yml
-  when: system_log_aggregator != ""
+- include: ssh.yml
 
-#- name: Reboot
-#  command: shutdown -r now "Ansible updates triggered"
-#  async: 0
-#  poll: 0
-#  ignore_errors: true
-#  when: upgrade_system
-#
-#- name: Wait for server to come back
-#  become: no
-#  local_action:
-#    module: wait_for
-#    host: "{{ ansible_host }}"
-#    state: started
-#    delay: 30
-#    timeout: 300
-#  when: upgrade_system
+- include: hardening.yml
+
+- include: time.yml
+  when: ansible_os_family | lower == "debian"
+
+- include: reboot.yml
+  with_items: "{{ ansible_play_hosts }}"
+  when:
+    - hostvars[item].inventory_hostname == inventory_hostname
+    - ansible_virtualization_type != "docker"
+    - upgraded_apt is changed or upgraded_yum is changed

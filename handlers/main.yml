@@ -15,31 +15,8 @@
   systemd:
     daemon_reload: yes
 
-- name: restart journald
+- name: restart timesyncd
   systemd:
-    name: systemd-journald
+    name: systemd-timesyncd
     state: restarted
-
-- name: restart rsyslog
-  systemd:
-    name: rsyslog
-    state: restarted
-  when: ansible_os_family == "Debian"
-
-- name: reboot server
-  shell: /usr/sbin/reboot
-  async: 1
-  poll: 0
-  ignore_errors: true
-#  failed_when: false
-  when: ansible_virtualization_type != "docker"
-  notify: wait for the server to finish rebooting
-  tags:
-    - skip_ansible_lint
-
-- name: wait for the server to finish rebooting
-  become: no
-  wait_for_connection:
-    delay: 20
-    timeout: 300
-  when: ansible_virtualization_type != "docker"
+    enabled: yes

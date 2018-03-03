@@ -19,7 +19,7 @@
     apt:
       upgrade: yes
     when: system_upgrade
-    notify: reboot server
+    register: upgraded_apt
   when: ansible_pkg_mgr == "apt"
 
 - block:
@@ -35,7 +35,7 @@
       state: latest
       update_cache: yes
     when: system_upgrade
-    notify: reboot server
+    register: upgraded_yum
     tags: skip_ansible_lint
   when: ansible_pkg_mgr == "yum"
 

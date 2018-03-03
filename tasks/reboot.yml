@@ -1,0 +1,14 @@
+- name: reboot server
+  shell: sleep 2 && shutdown -r now "Ansible triggered reboot"
+  async: 1
+  poll: 0
+  tags:
+  - skip_ansible_lint
+
+- name: Wait for server to come back
+  become: no
+  wait_for_connection:
+    delay: 10
+    timeout: 300
+
+- meta: reset_connection
