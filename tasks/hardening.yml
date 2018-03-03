@@ -6,6 +6,7 @@
     owner: root
     group: root
   with_items: "{{ system_grub_config_files }}"
+  ignore_errors: True
 
 - name: Set permissions for crontab files to 0600
   file:
