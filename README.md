@@ -7,6 +7,10 @@ Ansible Role: system
 
 Ansible role to install basic software and configure some important settings.
 
+# :warning: IMPORTANT NOTICE
+
+THIS PROJECT IS ABANDONED. WE DO NOT ACCEPT ANY NEW ISSUES AND/OR PULL REQUESTS.
+
 Overview
 --------
 
