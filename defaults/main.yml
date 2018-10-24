@@ -24,3 +24,7 @@ system_motd: "  Welcome to {{ system_fqdn }}"
 system_time_zone: "Europe/Warsaw"
 system_time_servers:
   - time.google.com
+
+apt_dependencies:
+  - aptitude
+  - python-apt

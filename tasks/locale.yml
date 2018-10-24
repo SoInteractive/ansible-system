@@ -10,4 +10,4 @@
 
 - name: Rebuild locale
   command: /usr/sbin/locale-gen
-  when: ansible_distribution == 'Ubuntu' and added_locale | changed
+  when: ansible_distribution == 'Ubuntu' and added_locale is changed

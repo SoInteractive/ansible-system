@@ -8,12 +8,9 @@
 
   - name: Install apt dependencies
     apt:
-      name: "{{ item }}"
+      name: "{{ apt_dependencies }}"
       state: present
       update_cache: yes
-    with_items:
-      - aptitude
-      - python-apt
 
   - name: Upgrade system
     apt:
@@ -41,9 +38,8 @@
 
 - name: Install basic software
   package:
-    name: "{{ item }}"
-    state: installed
-  with_items: "{{ system_packages }}"
+    name: "{{ system_packages }}"
+    state: present
   notify: start haveged
 
 - name: Make Vim great again

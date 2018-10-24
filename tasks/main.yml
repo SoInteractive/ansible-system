@@ -13,7 +13,7 @@
 - name: Fail when system_fqdn is not a domain
   fail:
     msg: "system_fqdn is an ip address!!!"
-  when: system_fqdn | search('[a-zA-Z]') == 0
+  when: system_fqdn is search('[a-zA-Z]') == 0
 
 - include: proxy.yml
   when: system_http_proxy != ""
